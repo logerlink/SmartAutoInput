@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图标生成工具 - 智能表单数据模拟助手</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .preview {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .icon-preview {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+        }
+        
+        .icon-box {
+            width: 128px;
+            height: 128px;
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+        }
+        
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        .download-links {
+            margin-top: 20px;
+        }
+        
+        .download-link {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background: #e7f3ff;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #0066cc;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖼️ 图标生成工具</h1>
+        
+        <div class="instructions">
+            <h3>使用说明</h3>
+            <p>这个工具可以帮助您生成Chrome扩展所需的不同尺寸图标。点击"生成图标"按钮后，右键点击预览图选择"图片另存为"下载。</p>
+            <p><strong>所需尺寸：</strong> 16x16, 48x48, 128x128 像素</p>
+        </div>
+        
+        <div class="preview">
+            <div class="icon-preview">
+                <div class="icon-box" id="preview128">
+                    <svg width="120" height="120" viewBox="0 0 128 128">
+                        <circle cx="64" cy="64" r="60" fill="#4CAF50"/>
+                        <rect x="32" y="40" width="64" height="48" rx="4" fill="white"/>
+                        <line x1="40" y1="52" x2="88" y2="52" stroke="#666" stroke-width="2"/>
+                        <line x1="40" y1="60" x2="68" y2="60" stroke="#666" stroke-width="2"/>
+                        <line x1="40" y1="68" x2="76" y2="68" stroke="#666" stroke-width="2"/>
+                        <text x="64" y="100" text-anchor="middle" font-family="Arial" font-size="16" fill="white" font-weight="bold">SF</text>
+                    </svg>
+                </div>
+                <div>128x128 (商店图标)</div>
+            </div>
+            
+            <div class="icon-preview">
+                <div class="icon-box" style="width: 48px; height: 48px;">
+                    <svg width="44" height="44" viewBox="0 0 48 48">
+                        <circle cx="24" cy="24" r="22" fill="#4CAF50"/>
+                        <rect x="12" y="15" width="24" height="18" rx="2" fill="white"/>
+                        <line x1="15" y1="19" x2="33" y2="19" stroke="#666" stroke-width="1"/>
+                        <line x1="15" y1="22" x2="25" y2="22" stroke="#666" stroke-width="1"/>
+                        <text x="24" y="38" text-anchor="middle" font-family="Arial" font-size="8" fill="white" font-weight="bold">SF</text>
+                    </svg>
+                </div>
+                <div>48x48 (管理页面)</div>
+            </div>
+            
+            <div class="icon-preview">
+                <div class="icon-box" style="width: 16px; height: 16px;">
+                    <svg width="12" height="12" viewBox="0 0 16 16">
+                        <circle cx="8" cy="8" r="7" fill="#4CAF50"/>
+                        <rect x="4" y="5" width="8" height="6" rx="1" fill="white"/>
+                        <line x1="5" y1="6" x2="11" y2="6" stroke="#666" stroke-width="0.5"/>
+                    </svg>
+                </div>
+                <div>16x16 (工具栏)</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="generateIcons()">生成图标</button>
+            <button onclick="downloadAll()">下载全部图标</button>
+        </div>
+        
+        <div class="download-links" id="downloadLinks">
+            <!-- 下载链接将在这里生成 -->
+        </div>
+    </div>
+
+    <script>
+        function generateIcons() {
+            const sizes = [16, 48, 128];
+            const downloadLinks = document.getElementById('downloadLinks');
+            downloadLinks.innerHTML = '<h3>下载链接（右键另存为）</h3>';
+            
+            sizes.forEach(size => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                
+                // 绘制背景
+                ctx.fillStyle = '#4CAF50';
+                ctx.beginPath();
+                ctx.arc(size/2, size/2, size/2 - 2, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // 绘制表单
+                ctx.fillStyle = 'white';
+                const formWidth = size * 0.5;
+                const formHeight = size * 0.375;
+                const formX = (size - formWidth) / 2;
+                const formY = (size - formHeight) / 2 - (size === 16 ? 1 : 0);
+                
+                ctx.fillRect(formX, formY, formWidth, formHeight);
+                ctx.strokeStyle = '#666';
+                ctx.lineWidth = size === 16 ? 0.3 : 1;
+                ctx.strokeRect(formX, formY, formWidth, formHeight);
+                
+                // 绘制线条
+                ctx.strokeStyle = '#666';
+                ctx.lineWidth = size === 16 ? 0.5 : (size === 48 ? 1 : 2);
+                
+                const lineY1 = formY + (size === 16 ? 2 : (size === 48 ? 4 : 8));
+                const lineY2 = formY + (size === 16 ? 4 : (size === 48 ? 8 : 16));
+                const lineY3 = formY + (size === 16 ? 6 : (size === 48 ? 12 : 24));
+                
+                ctx.beginPath();
+                ctx.moveTo(formX + (size === 16 ? 2 : 4), lineY1);
+                ctx.lineTo(formX + formWidth - (size === 16 ? 2 : 4), lineY1);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(formX + (size === 16 ? 2 : 4), lineY2);
+                ctx.lineTo(formX + formWidth * (size === 16 ? 0.6 : 0.7), lineY2);
+                ctx.stroke();
+                
+                if (size > 16) {
+                    ctx.beginPath();
+                    ctx.moveTo(formX + (size === 48 ? 4 : 8), lineY3);
+                    ctx.lineTo(formX + formWidth * (size === 48 ? 0.8 : 0.85), lineY3);
+                    ctx.stroke();
+                }
+                
+                // 添加文字（仅大尺寸）
+                if (size >= 48) {
+                    ctx.fillStyle = 'white';
+                    ctx.font = `bold ${size === 48 ? 6 : 12}px Arial`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('SF', size/2, size * 0.8);
+                }
+                
+                // 创建下载链接
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = `icon${size}.png`;
+                link.className = 'download-link';
+                link.textContent = `下载 icon${size}.png (${size}x${size}像素)`;
+                link.target = '_blank';
+                
+                downloadLinks.appendChild(link);
+            });
+        }
+        
+        function downloadAll() {
+            generateIcons();
+            // 自动触发所有下载链接（需要用户交互）
+            setTimeout(() => {
+                const links = document.querySelectorAll('.download-link');
+                links.forEach(link => {
+                    link.click();
+                });
+            }, 100);
+        }
+        
+        // 页面加载时自动生成预览
+        window.addEventListener('load', generateIcons);
+    </script>
+</body>
+</html>

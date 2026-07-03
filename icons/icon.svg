@@ -1,0 +1,23 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆形 -->
+  <circle cx="64" cy="64" r="60" fill="#4CAF50" stroke="#388E3C" stroke-width="2"/>
+  
+  <!-- 表单图标 -->
+  <rect x="32" y="40" width="64" height="48" rx="4" fill="white" stroke="#666" stroke-width="1"/>
+  
+  <!-- 表单线条 -->
+  <line x1="40" y1="52" x2="88" y2="52" stroke="#666" stroke-width="2"/>
+  <line x1="40" y1="60" x2="68" y2="60" stroke="#666" stroke-width="2"/>
+  <line x1="40" y1="68" x2="76" y2="68" stroke="#666" stroke-width="2"/>
+  
+  <!-- 智能图标（大脑） -->
+  <path d="M48 32 Q56 28 64 32 Q72 28 80 32 Q76 36 76 40 Q76 44 80 48 Q72 52 64 48 Q56 52 48 48 Q52 44 52 40 Q52 36 48 32" 
+        fill="#2196F3" stroke="#1976D2" stroke-width="1"/>
+  
+  <!-- 填充箭头 -->
+  <path d="M96 64 L108 64 L104 60 L108 56 L96 56 Z" fill="#FF9800"/>
+  <line x1="88" y1="64" x2="96" y2="64" stroke="#FF9800" stroke-width="2"/>
+  
+  <!-- 文字标识 -->
+  <text x="64" y="100" text-anchor="middle" font-family="Arial" font-size="12" fill="white" font-weight="bold">SF</text>
+</svg>
